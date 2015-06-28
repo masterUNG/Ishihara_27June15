@@ -1,5 +1,6 @@
 package appewtc.masterung.ishihara;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton choice1RadioButton, choice2RadioButton,
             choice3RadioButton, choice4RadioButton;
     private Button answerButton;
-
+    private int radioAnInt, indexAnInt;
+    private MyModel objMyModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +40,57 @@ public class MainActivity extends AppCompatActivity {
         //Create Radio Controller
         radioController();
 
+        //About MyModel
+        aboutMyModel();
+
     }   // onCreate
+
+    private void aboutMyModel() {
+
+        objMyModel = new MyModel();
+
+        //Receive myModel from Interface
+        objMyModel.setOnMyModelChangeListener(new MyModel.OnMyModelChangeListener() {
+            @Override
+            public void onMyModelChangeListener(MyModel myModel) {
+
+                
+
+            }   // event
+        });
+
+
+
+    }   //aboutMyModel
 
     private void radioController() {
 
         choiceRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                //Sound Effect
+                MediaPlayer radioPlayer = MediaPlayer.create(getBaseContext(), R.raw.effect_btn_shut);
+                radioPlayer.start();
+
+                // Setup Integer
+                switch (i) {
+                    case R.id.radioButton:
+                        radioAnInt = 1;
+                        break;
+                    case R.id.radioButton2:
+                        radioAnInt = 2;
+                        break;
+                    case R.id.radioButton3:
+                        radioAnInt = 3;
+                        break;
+                    case R.id.radioButton4:
+                        radioAnInt = 4;
+                        break;
+                    default:
+                        radioAnInt = 0;
+                        break;
+                }   //switch
 
             }   // event
         });
@@ -60,11 +107,48 @@ public class MainActivity extends AppCompatActivity {
                 MediaPlayer buttonPlayer = MediaPlayer.create(getBaseContext(), R.raw.effect_btn_long);
                 buttonPlayer.start();
 
+                //Check Zero
+                if (radioAnInt == 0) {
+
+                    //Alert
+                    Toast.makeText(MainActivity.this, "กรุณาตอบคำถาม นะคะ", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    //Check Times
+                    checkTimes();
+
+                }   //if
+
 
             }   //event
         });
 
     }   // buttonController
+
+    private void checkTimes() {
+
+        if (indexAnInt == 9) {
+
+            //Intent to ShowScore
+            Intent objIntent = new Intent(MainActivity.this, ShowScoreActivity.class);
+            startActivity(objIntent);
+
+        } else {
+
+            //Increase indexAnInt
+            indexAnInt += 1;
+
+            //Show Call View
+            questionTextView.setText(Integer.toString(indexAnInt + 1) + ". What is this ?" );
+
+            //Show Call Model
+            objMyModel.setModelAnInt(indexAnInt);
+
+
+        }
+
+    }   //checkTimes
 
     private void bindWidget() {
 
