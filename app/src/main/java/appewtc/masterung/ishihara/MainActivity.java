@@ -54,14 +54,45 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMyModelChangeListener(MyModel myModel) {
 
-                
+                //Change View
+                changeView(myModel.getModelAnInt());
 
             }   // event
         });
 
 
-
     }   //aboutMyModel
+
+    private void changeView(int modelAnInt) {
+
+        //Change Image
+        int intDrawable[] = {R.drawable.ishihara_01, R.drawable.ishihara_02,
+                R.drawable.ishihara_03, R.drawable.ishihara_04, R.drawable.ishihara_05,
+                R.drawable.ishihara_06, R.drawable.ishihara_07, R.drawable.ishihara_08,
+                R.drawable.ishihara_09, R.drawable.ishihara_10};
+        ishiharaImageView.setImageResource(intDrawable[modelAnInt]);
+
+        //Change Choice
+        int intTimes[] = new int[10];
+        intTimes[0] = R.array.times1;
+        intTimes[1] = R.array.times2;
+        intTimes[2] = R.array.times3;
+        intTimes[3] = R.array.times4;
+        intTimes[4] = R.array.times5;
+        intTimes[5] = R.array.times6;
+        intTimes[6] = R.array.times7;
+        intTimes[7] = R.array.times8;
+        intTimes[8] = R.array.times9;
+        intTimes[9] = R.array.times10;
+
+        String strChoice[] = new String[4];
+        strChoice = getResources().getStringArray(intTimes[modelAnInt]);
+        choice1RadioButton.setText(strChoice[0]);
+        choice2RadioButton.setText(strChoice[1]);
+        choice3RadioButton.setText(strChoice[2]);
+        choice4RadioButton.setText(strChoice[3]);
+
+    }   //changeView
 
     private void radioController() {
 
@@ -133,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
             //Intent to ShowScore
             Intent objIntent = new Intent(MainActivity.this, ShowScoreActivity.class);
             startActivity(objIntent);
+            finish();
 
         } else {
 
@@ -140,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             indexAnInt += 1;
 
             //Show Call View
-            questionTextView.setText(Integer.toString(indexAnInt + 1) + ". What is this ?" );
+            questionTextView.setText(Integer.toString(indexAnInt + 1) + ". What is this ?");
 
             //Show Call Model
             objMyModel.setModelAnInt(indexAnInt);
