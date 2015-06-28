@@ -1,17 +1,55 @@
 package appewtc.masterung.ishihara;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class ShowScoreActivity extends AppCompatActivity {
+
+    //Explicit
+    private TextView showScoreTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_score);
+
+        //Bind Widget
+        bindWidget();
+
+        //Show Score
+        showScore();
+
+    }   // onCreate
+
+    public void clickPlay(View view) {
+
+        Intent objIntent = new Intent(ShowScoreActivity.this, MainActivity.class);
+        startActivity(objIntent);
+        finish();
     }
+
+    public void clickExit(View view) {
+        finish();
+    }
+
+
+    private void showScore() {
+
+        int intMyScore = getIntent().getExtras().getInt("Score");
+        showScoreTextView.setText(Integer.toString(intMyScore) + "/10");
+
+    }   //showScore
+
+    private void bindWidget() {
+
+        showScoreTextView = (TextView) findViewById(R.id.txtShowScore);
+
+    }   //bindWidget
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,4 +72,4 @@ public class ShowScoreActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+}   // Main Class

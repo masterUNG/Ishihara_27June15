@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton choice1RadioButton, choice2RadioButton,
             choice3RadioButton, choice4RadioButton;
     private Button answerButton;
-    private int radioAnInt, indexAnInt;
+    private int radioAnInt, indexAnInt, scoreAnInt;
     private MyModel objMyModel;
 
     @Override
@@ -146,6 +146,12 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
 
+                    //Check Score
+                    checkScore();
+
+                    //Clear Check
+                    choiceRadioGroup.clearCheck();
+
                     //Check Times
                     checkTimes();
 
@@ -157,12 +163,23 @@ public class MainActivity extends AppCompatActivity {
 
     }   // buttonController
 
+    private void checkScore() {
+
+        int intAnswer[] = {1, 2, 3, 1, 2, 3, 1, 2, 4, 4};
+
+        if (radioAnInt == intAnswer[indexAnInt]) {
+            scoreAnInt += 1;
+        }   //if
+
+    }   //checkScore
+
     private void checkTimes() {
 
         if (indexAnInt == 9) {
 
             //Intent to ShowScore
             Intent objIntent = new Intent(MainActivity.this, ShowScoreActivity.class);
+            objIntent.putExtra("Score", scoreAnInt);
             startActivity(objIntent);
             finish();
 
