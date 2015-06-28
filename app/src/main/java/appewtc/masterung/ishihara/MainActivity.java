@@ -34,7 +34,21 @@ public class MainActivity extends AppCompatActivity {
         //Create Button Controller
         buttonController();
 
+        //Create Radio Controller
+        radioController();
+
     }   // onCreate
+
+    private void radioController() {
+
+        choiceRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+            }   // event
+        });
+
+    }   //radioController
 
     private void buttonController() {
 
